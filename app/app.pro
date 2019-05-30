@@ -1,14 +1,25 @@
 QT += qml quick widgets sql
 TARGET = cool-retro-term 
+CONFIG += c++11
+
+include(QOSC/QOSC.pri)
+
+# The following define makes your compiler emit warnings if you use
+# any Qt feature that has been marked deprecated (the exact warnings
+# depend on your compiler). Refer to the documentation for the
+# deprecated API to know how to port your code away from it.
+DEFINES += QT_DEPRECATED_WARNINGS
 
 DESTDIR = $$OUT_PWD/../
 
 HEADERS += \
     fileio.h \
+    scoscdataprovider.h \
     monospacefontmanager.h
 
-SOURCES = main.cpp \
+SOURCES += main.cpp \
     fileio.cpp \
+    scoscdataprovider.cpp \
     monospacefontmanager.cpp
 
 macx:ICON = icons/crt.icns

@@ -15,6 +15,8 @@
 #include <fileio.h>
 #include <monospacefontmanager.h>
 
+#include "scoscdataprovider.h"
+
 QString getNamedArgument(QStringList args, QString name, QString defaultName)
 {
     int index = args.indexOf(name);
@@ -50,6 +52,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     FileIO fileIO;
     MonospaceFontManager monospaceFontManager;
+    SCOSCDataProvider oscData;
 
 #if !defined(Q_OS_MAC)
     app.setWindowIcon(QIcon::fromTheme("cool-retro-term", QIcon(":../icons/32x32/cool-retro-term.png")));
@@ -97,6 +100,7 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("monospaceSystemFonts", monospaceFontManager.retrieveMonospaceFonts());
 
     engine.rootContext()->setContextProperty("devicePixelRatio", app.devicePixelRatio());
+    engine.rootContext()->setContextProperty("oscData", &oscData);
 
     // Manage import paths for Linux and OSX.
     QStringList importPathList = engine.importPathList();

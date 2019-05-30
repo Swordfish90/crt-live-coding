@@ -1,0 +1,4 @@
+#libs/*
+examples/build-*
+
+*.DS_Store
