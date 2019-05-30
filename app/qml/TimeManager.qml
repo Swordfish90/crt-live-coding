@@ -22,6 +22,7 @@ import QtQuick 2.2
 
 Timer{
     default property bool enableTimer: false
+    property real step: interval / 1000
     property real time
 
     NumberAnimation on time {
@@ -32,7 +33,7 @@ Timer{
         loops: Animation.Infinite
     }
 
-    onTriggered: time += interval
+    onTriggered: time += step
     running: appSettings.fps !== 0 && enableTimer
     interval: Math.round(1000 / appSettings.fps)
     repeat: true

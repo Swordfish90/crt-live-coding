@@ -131,7 +131,7 @@ Item {
              "
              void main() {
                  qt_TexCoord0 = qt_MultiTexCoord0;
-                 vec2 coords = vec2(fract(time/(1024.0*2.0)), fract(time/(1024.0*1024.0)));" +
+                 vec2 coords = vec2(fract(time/2.0), fract(time/1024.0));" +
 
                  (!fallBack && (flickering !== 0.0 || horizontalSync !== 0.0) ?
                      "vec4 initialNoiseTexel = texture2D(noiseSource, coords);"
@@ -203,7 +203,7 @@ Item {
 
              (glowingLine !== 0 ? "
                  float randomPass(vec2 coords){
-                     return fract(smoothstep(-120.0, 0.0, coords.y - (virtual_resolution.y + 120.0) * fract(time * 0.00015)));
+                     return fract(smoothstep(-120.0, 0.0, coords.y - (virtual_resolution.y + 120.0) * fract(time * 0.15)));
                  }" : "") +
 
              "float min2(vec2 v) {
@@ -244,7 +244,7 @@ Item {
 
                  //FallBack if there are problems
                  (fallBack && (flickering !== 0.0 || horizontalSync !== 0.0) ?
-                     "vec2 initialCoords = vec2(fract(time/(1024.0*2.0)), fract(time/(1024.0*1024.0)));
+                     "vec2 initialCoords = vec2(fract(time/2.0), fract(time/1024.0));
                       vec4 initialNoiseTexel = texture2D(noiseSource, initialCoords);"
                  : "") +
                  (fallBack && flickering !== 0.0 ? "
@@ -267,7 +267,7 @@ Item {
                  "vec2 coords = qt_TexCoord0;" +
 
                  (horizontalSync !== 0 ? "
-                     float dst = sin((coords.y + time * 0.001) * distortionFreq);
+                     float dst = sin((coords.y + time) * distortionFreq);
                      coords.x += dst * distortionScale;" +
 
                      (staticNoise ? "
@@ -276,7 +276,7 @@ Item {
                  : "") +
 
                  (jitter !== 0 || staticNoise !== 0 ?
-                     "vec4 noiseTexel = texture2D(noiseSource, scaleNoiseSize * coords + vec2(fract(time / 51.0), fract(time / 237.0)));"
+                     "vec4 noiseTexel = texture2D(noiseSource, scaleNoiseSize * coords + vec2(fract(1000.0 * time / 51.0), fract(1000.0 * time / 237.0)));"
                  : "") +
 
                  (jitter !== 0 ? "
