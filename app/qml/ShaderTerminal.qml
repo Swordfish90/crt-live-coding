@@ -30,13 +30,13 @@ Item {
     property ShaderEffectSource bloomSource
 
     property color fontColor: appSettings.fontColor
-    property color backgroundColor: appSettings.backgroundColor
+    property color backgroundColor: "#000000"//appSettings.backgroundColor
 
-    property real screenCurvature: appSettings.screenCurvature * appSettings.screenCurvatureSize
+    property real screenCurvature: 0//appSettings.screenCurvature * appSettings.screenCurvatureSize
 
     property real chromaColor: appSettings.chromaColor
 
-    property real ambientLight: appSettings.ambientLight * 0.2
+    property real ambientLight: 0//appSettings.ambientLight * 0.2
 
     property size virtual_resolution
 
@@ -545,7 +545,9 @@ Item {
                  (glowingLine !== 0 ? "
                      color += randomPass(coords * virtual_resolution) * glowingLine;" : "") +
 
-                 "vec3 txt_color = texture2D(screenBuffer, txt_coords).rgb;" +
+                 "vec4 frameBufferColor = texture2D(screenBuffer, txt_coords);
+                  vec3 txt_color = frameBufferColor.rgb;
+                  float bufferOpacity = frameBufferColor.a;" +
 
                  (burnIn !== 0 ? "
                      vec4 txt_blur = texture2D(burnInSource, staticCoords);
@@ -574,7 +576,7 @@ Item {
                      finalColor = mix(finalColor, frameColor.rgb, frameColor.a);"
                  : "") +
 
-                 "gl_FragColor = vec4(finalColor, qt_Opacity);" +
+                 "gl_FragColor = vec4(finalColor, qt_Opacity * rgb2grey(finalColor));" +
              "}"
 
           onStatusChanged: {
@@ -759,13 +761,13 @@ Item {
                  :
                      "vec3 finalColor = mix(backgroundColor.rgb, fontColor.rgb, greyscale_color * reflectionMask);") +
 
-                     (bloom !== 0 ?
-                         "vec4 bloomFullColor = texture2D(bloomSource, txt_coords);
-                          vec3 bloomColor = bloomFullColor.rgb;
-                          float bloomAlpha = bloomFullColor.a;
-                          bloomColor = convertWithChroma(bloomColor);
-                          finalColor += clamp(bloomColor * bloom * bloomAlpha, 0.0, 0.5);"
-                     : "") +
+                 (bloom !== 0 ?
+                     "vec4 bloomFullColor = texture2D(bloomSource, txt_coords);
+                      vec3 bloomColor = bloomFullColor.rgb;
+                      float bloomAlpha = bloomFullColor.a;
+                      bloomColor = convertWithChroma(bloomColor);
+                      finalColor += clamp(bloomColor * bloom * bloomAlpha, 0.0, 0.5);"
+                 : "") +
 
                  "finalColor *= screen_brightness;" +
 
