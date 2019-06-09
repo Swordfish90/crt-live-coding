@@ -14,20 +14,22 @@ void SCOSCDataProvider::onMessageReceived(QOSCMessage* message)
     //qDebug() << message->getAddress();
 
     if (message->getAddress() == "/scdata") {
-        float loudness = message->getArgumentAsFloat(1);
-//        float flat = message->getArgumentAsFloat(3);
-//        float centroid = message->getArgumentAsFloat(5);
+        float loud = message->getArgumentAsFloat(1);
+        float flat = message->getArgumentAsFloat(3);
+        float centroid = message->getArgumentAsFloat(5);
 
-        float pw0 = message->getArgumentAsFloat(3);
-        float pw1 = message->getArgumentAsFloat(5);
-        float pw2 = message->getArgumentAsFloat(7);
-        float pw3 = message->getArgumentAsFloat(9);
+        float pw0 = message->getArgumentAsFloat(7);
+        float pw1 = message->getArgumentAsFloat(8);
+        float pw2 = message->getArgumentAsFloat(9);
+        float pw3 = message->getArgumentAsFloat(10);
         float pw4 = message->getArgumentAsFloat(11);
-        float pw5 = message->getArgumentAsFloat(13);
-        float pw6 = message->getArgumentAsFloat(15);
-        float pw7 = message->getArgumentAsFloat(17);
+        float pw5 = message->getArgumentAsFloat(12);
+        float pw6 = message->getArgumentAsFloat(13);
+        float pw7 = message->getArgumentAsFloat(14);
 
-        emit newData(loudness, pw0, pw1, pw2, pw3, pw4, pw5, pw6, pw7);
+        QVector<float> pwdata {pw0, pw1, pw2, pw3, pw4, pw5, pw6, pw7};
+
+        emit newData(loud, flat, centroid, pwdata);
     }
 
 //    if (message->getAddress() == "/debug/loud") {

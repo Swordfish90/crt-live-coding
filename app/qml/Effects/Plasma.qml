@@ -8,7 +8,7 @@ ShaderEffect {
     Connections {
         target: oscData
         onNewData: {
-            effect.loudness = loudness / 100
+            effect.loudness = loud / 100
             effect.pw0 = pw0
             effect.pw1 = pw1
             effect.pw2 = pw2

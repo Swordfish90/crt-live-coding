@@ -45,5 +45,6 @@
         <file>NewTerminalFrame.qml</file>
         <file>SlowBurnIn.qml</file>
         <file>Effects/Plasma.qml</file>
+        <file>Effects/Tunnel.qml</file>
     </qresource>
 </RCC>

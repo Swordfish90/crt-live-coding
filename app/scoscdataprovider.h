@@ -12,7 +12,7 @@ public:
     explicit SCOSCDataProvider(QObject *parent = nullptr);
 
 signals:
-    void newData(float loudness, float pw0, float pw1, float pw2, float pw3, float pw4, float pw5, float pw6, float pw7);
+    void newData(float loud, float flat, float centroid, QVector<float> eqm);
 
 public slots:
     void onMessageReceived(QOSCMessage* message);
