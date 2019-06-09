@@ -27,7 +27,7 @@ void SCOSCDataProvider::onMessageReceived(QOSCMessage* message)
         float pw6 = message->getArgumentAsFloat(13);
         float pw7 = message->getArgumentAsFloat(14);
 
-        QVector<float> pwdata {pw0, pw1, pw2, pw3, pw4, pw5, pw6, pw7};
+        QVector<qreal> pwdata {pw0, pw1, pw2, pw3, pw4, pw5, pw6, pw7};
 
         emit newData(loud, flat, centroid, pwdata);
     }
