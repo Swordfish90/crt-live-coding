@@ -142,13 +142,14 @@ Tab{
                         onColorSelected: appSettings._fontColor = color;
                         color: appSettings._fontColor
                     }
-                    ColorButton{
-                        name: qsTr("Background")
-                        height: 50
-                        Layout.fillWidth: true
-                        onColorSelected: appSettings._backgroundColor = color;
-                        color: appSettings._backgroundColor
-                    }
+                    // We currently disable background color control (it might create issues with background shaders.
+//                    ColorButton{
+//                        name: qsTr("Background")
+//                        height: 50
+//                        Layout.fillWidth: true
+//                        onColorSelected: appSettings._backgroundColor = color;
+//                        color: appSettings._backgroundColor
+//                    }
                 }
             }
         }

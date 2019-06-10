@@ -69,7 +69,8 @@ QtObject{
     property bool useCustomCommand: false
     property string customCommand: ""
 
-    property string _backgroundColor: "#000000"
+    // We are currently disabling background color customization which makes background shaders more complex.
+    readonly property string _backgroundColor: "#000000"
     property string _fontColor: "#ff8100"
     property string saturatedColor: Utils.mix(Utils.strToColor("#FFFFFF"), Utils.strToColor(_fontColor), saturationColor * 0.5)
     property color fontColor: Utils.mix(Utils.strToColor(saturatedColor), Utils.strToColor(_backgroundColor), 0.7 + (contrast * 0.3))
@@ -296,7 +297,7 @@ QtObject{
     function loadProfileString(profileString){
         var settings = JSON.parse(profileString);
 
-        _backgroundColor = settings.backgroundColor !== undefined ? settings.backgroundColor : _backgroundColor;
+        //_backgroundColor = settings.backgroundColor !== undefined ? settings.backgroundColor : _backgroundColor;
         _fontColor = settings.fontColor !== undefined ? settings.fontColor : _fontColor;
 
         horizontalSync = settings.horizontalSync !== undefined ? settings.horizontalSync : horizontalSync

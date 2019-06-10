@@ -30,7 +30,7 @@ Rectangle {
     property ShaderEffectSource bloomSource
 
     property color fontColor: appSettings.fontColor
-    property color backgroundColor: "#000000"//appSettings.backgroundColor
+    property color backgroundColor: appSettings.backgroundColor
 
     property real chromaColor: appSettings.chromaColor
 
@@ -39,7 +39,7 @@ Rectangle {
     color: "black"
 
     Loader {
-        source: "qrc:/Effects/Tiles.qml"
+        source: "qrc:/Effects/Tunnel.qml"
         anchors.fill: parent
     }
 
@@ -163,7 +163,6 @@ Rectangle {
 
              uniform highp vec4 fontColor;
              uniform highp vec4 backgroundColor;
-             uniform lowp float shadowLength;
 
              uniform highp vec2 virtual_resolution;
 
