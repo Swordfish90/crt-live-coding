@@ -221,12 +221,7 @@ Item{
         function correctDistortion(x, y){
             x = (x - margin) / width;
             y = (y - margin) / height;
-
-            var cc = Qt.size(0.5 - x, 0.5 - y);
-            var distortion = (cc.height * cc.height + cc.width * cc.width) * appSettings.screenCurvature * appSettings.screenCurvatureSize;
-
-            return Qt.point((x - cc.width  * (1+distortion) * distortion) * kterminal.totalWidth,
-                           (y - cc.height * (1+distortion) * distortion) * kterminal.totalHeight)
+            return Qt.point(x * kterminal.totalWidth, y * kterminal.totalHeight)
         }
     }
     ShaderEffectSource{

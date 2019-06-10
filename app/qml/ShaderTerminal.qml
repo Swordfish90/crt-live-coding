@@ -32,11 +32,7 @@ Rectangle {
     property color fontColor: appSettings.fontColor
     property color backgroundColor: "#000000"//appSettings.backgroundColor
 
-    property real screenCurvature: 0//appSettings.screenCurvature * appSettings.screenCurvatureSize
-
     property real chromaColor: appSettings.chromaColor
-
-    property real ambientLight: 0//appSettings.ambientLight * 0.2
 
     property size virtual_resolution
 
@@ -52,13 +48,10 @@ Rectangle {
 
          property ShaderEffectSource screenBuffer: frameBuffer
          property ShaderEffectSource burnInSource: burnInEffect.source
-         property ShaderEffectSource frameSource: terminalFrameLoader.item
 
          property color fontColor: parent.fontColor
          property color backgroundColor: parent.backgroundColor
-         property real screenCurvature: parent.screenCurvature
          property real chromaColor: parent.chromaColor
-         property real ambientLight: parent.ambientLight
 
          property real musicFlat: 0
          property real musicLoudness: 0
@@ -78,7 +71,6 @@ Rectangle {
 
          property real jitter: appSettings.jitter
          property size jitterDisplacement: Qt.size(0.007 * jitter, 0.002 * jitter)
-         property real shadowLength: 0.25 * screenCurvature * Utils.lint(0.50, 1.5, ambientLight)
          property real staticNoise: appSettings.staticNoise
          property size scaleNoiseSize: Qt.size((width) / (noiseTexture.width * appSettings.windowScaling * appSettings.totalFontScaling),
                                                (height) / (noiseTexture.height * appSettings.windowScaling * appSettings.totalFontScaling))
@@ -190,17 +182,12 @@ Rectangle {
                ||(fallBack && (flickering || horizontalSync))) ? "
                  uniform lowp sampler2D noiseSource;
                  uniform highp vec2 scaleNoiseSize;" : "") +
-             (screenCurvature !== 0 ? "
-                 uniform highp float screenCurvature;
-                 uniform lowp sampler2D frameSource;" : "") +
              (glowingLine !== 0 ? "
                  uniform highp float glowingLine;" : "") +
              (chromaColor !== 0 ? "
                  uniform lowp float chromaColor;" : "") +
              (jitter !== 0 ? "
                  uniform lowp vec2 jitterDisplacement;" : "") +
-             (ambientLight !== 0 ? "
-                 uniform lowp float ambientLight;" : "") +
 
              (fallBack && horizontalSync !== 0 ? "
                  uniform lowp float horizontalSyncStrength;" : "") +
@@ -230,14 +217,7 @@ Rectangle {
                  return min2(step(0.0, v) - step(1.0, v));
              }
 
-             vec2 barrel(vec2 v, vec2 cc) {" +
-
-                 (screenCurvature !== 0 ? "
-                     float distortion = dot(cc, cc) * screenCurvature;
-                     return (v - cc * (1.0 + distortion) * distortion);"
-                 :
-                     "return v;") +
-             "}" +
+             " +
 
              "vec3 convertWithChroma(vec3 inColor) {
                 vec3 outColor = inColor;" +
@@ -271,10 +251,7 @@ Rectangle {
                  (staticNoise ? "
                      float noise = staticNoise;" : "") +
 
-                 (screenCurvature !== 0 ? "
-                     vec2 staticCoords = barrel(qt_TexCoord0, cc);"
-                 :"
-                     vec2 staticCoords = qt_TexCoord0;") +
+                 "vec2 staticCoords = qt_TexCoord0;" +
 
                  "vec2 coords = qt_TexCoord0;" +
 
@@ -328,14 +305,6 @@ Rectangle {
                  (flickering !== 0 ? "
                      finalColor *= brightness;" : "") +
 
-                 (ambientLight !== 0 ? "
-                     finalColor += vec3(ambientLight) * (1.0 - distance) * (1.0 - distance);" : "") +
-
-                 (screenCurvature !== 0 ?
-                    "vec4 frameColor = texture2D(frameSource, qt_TexCoord0);
-                     finalColor = mix(finalColor, frameColor.rgb, frameColor.a);"
-                 : "") +
-
                  "gl_FragColor = vec4(finalColor, qt_Opacity * rgb2grey(finalColor));" +
              "}"
 
@@ -351,29 +320,6 @@ Rectangle {
           }
      }
 
-     Loader {
-         id: terminalFrameLoader
-
-         active: screenCurvature !== 0
-
-         width: staticShader.width
-         height: staticShader.height
-
-         sourceComponent: ShaderEffectSource {
-
-             sourceItem: terminalFrame
-             hideSource: true
-             visible: false
-             format: ShaderEffectSource.RGBA
-
-             NewTerminalFrame {
-                 id: terminalFrame
-                 blending: false
-                 anchors.fill: parent
-             }
-         }
-     }
-
      ShaderEffect {
          id: staticShader
 
@@ -387,8 +333,6 @@ Rectangle {
          property color backgroundColor: parent.backgroundColor
          property real bloom: appSettings.bloom * 2.5
 
-         property real screenCurvature: parent.screenCurvature
-
          property real chromaColor: appSettings.chromaColor;
 
          property real rbgShift: (appSettings.rbgShift / width) * appSettings.totalFontScaling // TODO FILIPPO width here is wrong.
@@ -396,8 +340,6 @@ Rectangle {
          property int rasterization: appSettings.rasterization
 
          property real screen_brightness: Utils.lint(0.5, 1.5, appSettings.brightness)
-
-         property real ambientLight: parent.ambientLight
 
          property size virtual_resolution: parent.virtual_resolution
 
@@ -428,17 +370,11 @@ Rectangle {
                  uniform highp sampler2D bloomSource;
                  uniform lowp float bloom;" : "") +
 
-             (screenCurvature !== 0 ? "
-                 uniform highp float screenCurvature;" : "") +
-
              (chromaColor !== 0 ? "
                  uniform lowp float chromaColor;" : "") +
 
              (rbgShift !== 0 ? "
                  uniform lowp float rbgShift;" : "") +
-
-             (ambientLight !== 0 ? "
-                 uniform lowp float ambientLight;" : "") +
 
              "highp float getScanlineIntensity(vec2 coords) {
                  float result = 1.0;" +
@@ -486,12 +422,7 @@ Rectangle {
              "void main() {" +
                  "vec2 cc = vec2(0.5) - qt_TexCoord0;" +
 
-                 (screenCurvature !== 0 ? "
-                     float distortion = dot(cc, cc) * screenCurvature;
-                     vec2 curvatureCoords = (qt_TexCoord0 - cc * (1.0 + distortion) * distortion);
-                     vec2 txt_coords = - 2.0 * curvatureCoords + 3.0 * step(vec2(0.0), curvatureCoords) * curvatureCoords - 3.0 * step(vec2(1.0), curvatureCoords) * curvatureCoords;"
-                 :"
-                     vec2 txt_coords = qt_TexCoord0;") +
+                 "vec2 txt_coords = qt_TexCoord0;" +
 
                  "vec3 txt_color = texture2D(source, txt_coords).rgb;" +
 
@@ -509,11 +440,7 @@ Rectangle {
                   "txt_color += vec3(0.0001);" +
                   "float greyscale_color = rgb2grey(txt_color);" +
 
-                 (screenCurvature !== 0 ? "
-                     float reflectionMask = sum2(step(vec2(0.0), curvatureCoords) - step(vec2(1.0), curvatureCoords));
-                     reflectionMask = clamp(reflectionMask, 0.0, 1.0);"
-                 :
-                     "float reflectionMask = 1.0;") +
+                  "float reflectionMask = 1.0;" +
 
                  (chromaColor !== 0 ?
                      "vec3 foregroundColor = mix(fontColor.rgb, txt_color * fontColor.rgb / greyscale_color, chromaColor);

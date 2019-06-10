@@ -29,7 +29,6 @@ QtObject{
 
     // STATIC CONSTANTS ////////////////////////////////////////////////////////
 
-    readonly property real screenCurvatureSize: 0.4
     readonly property real minimumFontScaling: 0.25
     readonly property real maximumFontScaling: 2.50
 
@@ -64,7 +63,6 @@ QtObject{
     // PROFILE SETTINGS ///////////////////////////////////////////////////////
 
     property real windowOpacity: 1.0
-    property real ambientLight: 0.2
     property real contrast: 0.80
     property real brightness: 0.5
 
@@ -78,7 +76,6 @@ QtObject{
     property color backgroundColor: Utils.mix(Utils.strToColor(_backgroundColor), Utils.strToColor(saturatedColor), 0.7 + (contrast * 0.3))
 
     property real staticNoise: 0.12
-    property real screenCurvature: 0.3
     property real glowingLine: 0.2
     property real burnIn: 0.25
     property real bloom: 0.55
@@ -222,7 +219,6 @@ QtObject{
             staticNoise: staticNoise,
             chromaColor: chromaColor,
             saturationColor: saturationColor,
-            screenCurvature: screenCurvature,
             glowingLine: glowingLine,
             burnIn: burnIn,
             bloom: bloom,
@@ -231,7 +227,6 @@ QtObject{
             rbgShift: rbgShift,
             brightness: brightness,
             contrast: contrast,
-            ambientLight: ambientLight,
             windowOpacity: windowOpacity,
             fontName: fontNames[rasterization],
             fontWidth: fontWidth,
@@ -309,7 +304,6 @@ QtObject{
         staticNoise = settings.staticNoise !== undefined ? settings.staticNoise : staticNoise;
         chromaColor = settings.chromaColor !== undefined ? settings.chromaColor : chromaColor;
         saturationColor = settings.saturationColor !== undefined ? settings.saturationColor : saturationColor;
-        screenCurvature = settings.screenCurvature !== undefined ? settings.screenCurvature : screenCurvature;
         glowingLine = settings.glowingLine !== undefined ? settings.glowingLine : glowingLine;
 
         burnIn = settings.burnIn !== undefined ? settings.burnIn : burnIn
@@ -321,7 +315,6 @@ QtObject{
 
         rbgShift = settings.rbgShift !== undefined ? settings.rbgShift : rbgShift;
 
-        ambientLight = settings.ambientLight !== undefined ? settings.ambientLight : ambientLight;
         contrast = settings.contrast !== undefined ? settings.contrast : contrast;
         brightness = settings.brightness !== undefined ? settings.brightness : brightness;
         windowOpacity = settings.windowOpacity !== undefined ? settings.windowOpacity : windowOpacity;
@@ -381,7 +374,6 @@ QtObject{
         ListElement{
             text: "Default Amber"
             obj_string: '{
-                  "ambientLight": 0.2,
                   "backgroundColor": "#000000",
                   "bloom": 0.5538,
                   "brightness": 0.5,
@@ -398,7 +390,6 @@ QtObject{
                   "rasterization": 0,
                   "rbgShift": 0,
                   "saturationColor": 0.2483,
-                  "screenCurvature": 0.3,
                   "staticNoise": 0.1198,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -409,7 +400,6 @@ QtObject{
             text: "Monochrome Green"
             obj_string: '
                 {
-                  "ambientLight": 0.2,
                   "backgroundColor": "#000000",
                   "bloom": 0.5538,
                   "brightness": 0.5,
@@ -426,7 +416,6 @@ QtObject{
                   "rasterization": 0,
                   "rbgShift": 0,
                   "saturationColor": 0.0,
-                  "screenCurvature": 0.3,
                   "staticNoise": 0.1198,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -437,7 +426,6 @@ QtObject{
             text: "Green Scanlines"
             obj_string: '
                 {
-                  "ambientLight": 0,
                   "backgroundColor": "#000000",
                   "bloom": 0.6,
                   "brightness": 0.5,
@@ -454,7 +442,6 @@ QtObject{
                   "rasterization": 1,
                   "rbgShift": 0,
                   "saturationColor": 0.5,
-                  "screenCurvature": 0.3,
                   "staticNoise": 0.15,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -465,7 +452,6 @@ QtObject{
             text: "Default Pixelated"
             obj_string: '
                 {
-                  "ambientLight": 0,
                   "backgroundColor": "#000000",
                   "bloom": 0.4045,
                   "brightness": 0.6041,
@@ -482,7 +468,6 @@ QtObject{
                   "rasterization": 2,
                   "rbgShift": 0,
                   "saturationColor": 0,
-                  "screenCurvature": 0,
                   "staticNoise": 0.15,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -493,7 +478,6 @@ QtObject{
             text: "Apple ]["
             obj_string:
                 '{
-                  "ambientLight": 0.3038,
                   "backgroundColor": "#000000",
                   "bloom": 0.5,
                   "brightness": 0.5,
@@ -510,7 +494,6 @@ QtObject{
                   "rasterization": 1,
                   "rbgShift": 0,
                   "saturationColor": 0,
-                  "screenCurvature": 0.5,
                   "staticNoise": 0.099,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -521,7 +504,6 @@ QtObject{
             text: "Vintage"
             obj_string: '
                 {
-                  "ambientLight": 0.5,
                   "backgroundColor": "#000000",
                   "bloom": 0.4983,
                   "brightness": 0.5014,
@@ -538,7 +520,6 @@ QtObject{
                   "rasterization": 1,
                   "rbgShift": 0.2969,
                   "saturationColor": 0,
-                  "screenCurvature": 0.5,
                   "staticNoise": 0.2969,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -549,7 +530,6 @@ QtObject{
             text: "IBM Dos"
             obj_string:
                 '{
-                  "ambientLight": 0.151,
                   "backgroundColor": "#000000",
                   "bloom": 0.2969,
                   "brightness": 0.5,
@@ -566,7 +546,6 @@ QtObject{
                   "rasterization": 0,
                   "rbgShift": 0.3524,
                   "saturationColor": 0,
-                  "screenCurvature": 0.4,
                   "staticNoise": 0.0503,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -577,7 +556,6 @@ QtObject{
             text: "IBM 3278"
             obj_string:
                 '{
-                  "ambientLight": 0.1,
                   "backgroundColor": "#000000",
                   "bloom": 0.2969,
                   "brightness": 0.5,
@@ -594,7 +572,6 @@ QtObject{
                   "rasterization": 0,
                   "rbgShift": 0,
                   "saturationColor": 0,
-                  "screenCurvature": 0.2,
                   "staticNoise": 0,
                   "windowOpacity": 1,
                   "margin": 0.5
@@ -605,7 +582,6 @@ QtObject{
             text: "Futuristic"
             obj_string:
                 '{
-                  "ambientLight": 0,
                   "backgroundColor": "#000000",
                   "bloom": 0.5017,
                   "brightness": 0.5014,
@@ -622,7 +598,6 @@ QtObject{
                   "rasterization": 0,
                   "rbgShift": 0,
                   "saturationColor": 0.4983,
-                  "screenCurvature": 0,
                   "staticNoise": 0.0955,
                   "windowOpacity": 0.7,
                   "margin": 0.1

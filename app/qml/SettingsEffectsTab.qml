@@ -60,17 +60,6 @@ Tab{
                     value: appSettings.glowingLine
                 }
                 CheckableSlider{
-                    name: qsTr("Screen Curvature")
-                    onNewValue: appSettings.screenCurvature = newValue;
-                    value: appSettings.screenCurvature;
-                }
-                CheckableSlider{
-                    name: qsTr("Ambient Light")
-                    onNewValue: appSettings.ambientLight = newValue;
-                    value: appSettings.ambientLight
-                    enabled: appSettings.framesIndex !== 0
-                }
-                CheckableSlider{
                     name: qsTr("Flickering")
                     onNewValue: appSettings.flickering = newValue;
                     value: appSettings.flickering;
