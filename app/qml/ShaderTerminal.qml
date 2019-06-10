@@ -43,7 +43,7 @@ Rectangle {
     color: "black"
 
     Loader {
-        source: "qrc:/Effects/Plasma.qml"
+        source: "qrc:/Effects/Tiles.qml"
         anchors.fill: parent
     }
 

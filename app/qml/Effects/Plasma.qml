@@ -46,7 +46,6 @@ ShaderEffect {
     }
 
     fragmentShader: "
-        #define WAVES 2.0
         #ifdef GL_ES
             precision mediump float;
         #endif
