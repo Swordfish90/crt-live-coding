@@ -39,7 +39,7 @@ Rectangle {
     color: "black"
 
     Loader {
-        source: "qrc:/Effects/Tunnel.qml"
+        source: appSettings.selectedBackgroundSource
         anchors.fill: parent
     }
 

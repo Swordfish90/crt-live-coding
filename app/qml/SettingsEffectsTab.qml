@@ -27,6 +27,29 @@ Tab{
         anchors.fill: parent
         spacing: 2
 
+        GroupBox {
+            title: qsTr("Background Shader")
+            Layout.fillWidth: true
+
+            ComboBox {
+                id: backgroundShaderCombobox
+
+                anchors.fill: parent
+                model: appSettings.backgrounds
+                textRole: "name"
+
+                onCurrentIndexChanged: appSettings.selectedBackground = appSettings.backgrounds.get(currentIndex).bgId
+
+                function updateIndex() {
+                    for (var i = 0; i < appSettings.backgrounds.count; i++) {
+                        if (appSettings.selectedBackground === appSettings.backgrounds.get(i).bgId) {
+                            currentIndex = i
+                        }
+                    }
+                }
+            }
+        }
+
         GroupBox{
             title: qsTr("Effects")
             Layout.fillWidth: true

@@ -35,6 +35,13 @@ QtObject{
     readonly property real minBurnInFadeTime: 0.160
     readonly property real maxBurnInFadeTime: 1.6
 
+    readonly property ListModel backgrounds: ListModel {
+        ListElement { bgId: "plasma"; name: "Plasma"; source: "qrc:/Effects/Plasma.qml" }
+        ListElement { bgId: "tunnel"; name: "Tunnel"; source: "qrc:/Effects/Tunnel.qml" }
+        ListElement { bgId: "tiles"; name: "Tiles"; source: "qrc:/Effects/Tiles.qml" }
+        ListElement { bgId: "circleeq"; name: "CircleEQ"; source: "qrc:/Effects/CircleEQ.qml" }
+    }
+
     // GENERAL SETTINGS ///////////////////////////////////////////////////////
 
     property int x: 100
@@ -93,6 +100,17 @@ QtObject{
 
     property real _margin: 0.5
     property real margin: Utils.lint(1.0, 20.0, _margin)
+
+    property string selectedBackground: "plasma"
+    property string selectedBackgroundSource: "qrc:/Effects/Plasma.qml"
+
+    onSelectedBackgroundChanged: {
+        for (var i = 0; i < backgrounds.count; i++) {
+            if (selectedBackground === backgrounds.get(i).bgId) {
+                selectedBackgroundSource = backgrounds.get(i).source
+            }
+        }
+    }
 
     readonly property int no_rasterization: 0
     readonly property int scanline_rasterization: 1
@@ -231,7 +249,8 @@ QtObject{
             windowOpacity: windowOpacity,
             fontName: fontNames[rasterization],
             fontWidth: fontWidth,
-            margin: _margin
+            margin: _margin,
+            selectedBackground: selectedBackground
         }
         return settings;
     }
@@ -324,6 +343,8 @@ QtObject{
         fontWidth = settings.fontWidth !== undefined ? settings.fontWidth : fontWidth;
 
         _margin = settings.margin !== undefined ? settings.margin : _margin;
+
+        selectedBackground = settings.selectedBackground !== undefined ? selectedBackground : selectedBackground;
 
         handleFontChanged();
     }
