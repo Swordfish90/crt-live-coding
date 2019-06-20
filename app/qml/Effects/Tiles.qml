@@ -56,7 +56,7 @@ ShaderEffect {
             frag *= 5.0;
             float random = rand(floor(frag));
             vec2 black = smoothstep(1.0, 0.8, cos(frag * pi * 2.0));
-            vec3 color = hsv2rgb(vec3(random, 1.0, 1.0));
+            vec3 color = hsv2rgb(vec3(random + loudIntegral * 0.01, 1.0, 1.0));
             color *= black.x * black.y * smoothstep(1.0, 0.0, length(fract(frag) - 0.5));
             color *= 0.5 + loud * cos(random + random * time + 0.125 * pi * loudIntegral);
             color *= 0.5;
