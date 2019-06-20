@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import "../utils.js" as Utils
+
 ShaderEffect {
     id: effect
 
@@ -8,8 +10,8 @@ ShaderEffect {
     Connections {
         target: oscData
         onNewData: {
-            effect.speed = loud / 600
             effect.loud = loud / 100
+            effect.speed = Utils.lint(0.01, 0.20, effect.loud * effect.loud)
         }
     }
 
@@ -76,6 +78,7 @@ ShaderEffect {
             }
 
             f = f * fontColor.rgb * loud;
+            f = clamp(vec3(0.0), vec3(0.5), f);
 
             gl_FragColor = vec4(f, qt_Opacity);" +
         "}"
