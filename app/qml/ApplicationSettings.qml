@@ -35,6 +35,8 @@ QtObject{
     readonly property real minBurnInFadeTime: 0.160
     readonly property real maxBurnInFadeTime: 1.6
 
+    readonly property real musicSensitivityStrength: 0.5
+
     readonly property ListModel backgrounds: ListModel {
         ListElement { bgId: "plasma"; name: "Plasma"; source: "qrc:/Effects/Plasma.qml" }
         ListElement { bgId: "tunnel"; name: "Tunnel"; source: "qrc:/Effects/Tunnel.qml" }
@@ -57,7 +59,7 @@ QtObject{
     property bool showTerminalSize: true
     property real windowScaling: 1.0
 
-    property real fps: 20
+    property real fps: 30
     property bool verbose: false
 
     property real bloomQuality: 0.5
@@ -69,6 +71,7 @@ QtObject{
 
     // PROFILE SETTINGS ///////////////////////////////////////////////////////
 
+    property real musicSensitivity: 0.15
     property real windowOpacity: 1.0
     property real contrast: 0.80
     property real brightness: 0.5
@@ -250,7 +253,8 @@ QtObject{
             fontName: fontNames[rasterization],
             fontWidth: fontWidth,
             margin: _margin,
-            selectedBackground: selectedBackground
+            selectedBackground: selectedBackground,
+            musicSensitivity: musicSensitivity
         }
         return settings;
     }
@@ -344,7 +348,9 @@ QtObject{
 
         _margin = settings.margin !== undefined ? settings.margin : _margin;
 
-        selectedBackground = settings.selectedBackground !== undefined ? selectedBackground : selectedBackground;
+        selectedBackground = settings.selectedBackground !== undefined ? settings.selectedBackground : selectedBackground;
+
+        musicSensitivity = settings.musicSensitivity !== undefined ? settings.musicSensitivity : musicSensitivity;
 
         handleFontChanged();
     }

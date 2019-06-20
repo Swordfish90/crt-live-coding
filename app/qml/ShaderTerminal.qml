@@ -53,8 +53,7 @@ Rectangle {
          property color backgroundColor: parent.backgroundColor
          property real chromaColor: parent.chromaColor
 
-         property real musicFlat: 0
-         property real musicLoudness: 0
+         property real musicSensitivity: 0
          property real flickering: appSettings.flickering
          property real horizontalSync: appSettings.horizontalSync
          property real horizontalSyncStrength: Utils.lint(0.05, 0.35, horizontalSync)
@@ -82,6 +81,16 @@ Rectangle {
 
          // If something goes wrong activate the fallback version of the shader.
          property bool fallBack: false
+
+         Connections {
+             property real musicSensitivityDelta: appSettings.musicSensitivityStrength * appSettings.musicSensitivity
+
+             target: oscData
+             onNewData: {
+                 var normalLoud = Math.min(Math.max(0.0, loud / 64), 1.0)
+                 dynamicShader.musicSensitivity = Utils.lint(1.0 - musicSensitivityDelta, 1.0 + musicSensitivityDelta, normalLoud)
+             }
+         }
 
          anchors.fill: parent
          blending: true
@@ -111,6 +120,7 @@ Rectangle {
          vertexShader: "
              uniform highp mat4 qt_Matrix;
              uniform highp float time;
+             uniform mediump float musicSensitivity;
 
              attribute highp vec4 qt_Vertex;
              attribute highp vec2 qt_MultiTexCoord0;
@@ -166,8 +176,7 @@ Rectangle {
 
              uniform highp vec2 virtual_resolution;
 
-             uniform mediump float musicFlat;
-             uniform mediump float musicLoudness;" +
+             uniform mediump float musicSensitivity;" +
 
              (burnIn !== 0 ? "
                  uniform sampler2D burnInSource;
@@ -269,7 +278,7 @@ Rectangle {
 
                  (jitter !== 0 ? "
                      vec2 offset = vec2(noiseTexel.b, noiseTexel.a) - vec2(0.5);
-                     vec2 txt_coords = coords + offset * jitterDisplacement;"
+                     vec2 txt_coords = coords + offset * jitterDisplacement * musicSensitivity;"
                  :  "vec2 txt_coords = coords;") +
 
                  "float color = 0.0001;" +
@@ -303,6 +312,8 @@ Rectangle {
 
                  (flickering !== 0 ? "
                      finalColor *= brightness;" : "") +
+
+                 "finalColor *= musicSensitivity;" +
 
                  "gl_FragColor = vec4(finalColor, qt_Opacity * rgb2grey(finalColor));" +
              "}"

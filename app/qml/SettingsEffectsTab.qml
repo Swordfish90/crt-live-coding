@@ -58,6 +58,11 @@ Tab{
                 anchors.fill: parent
 
                 CheckableSlider{
+                    name: qsTr("Music Sensitivity")
+                    onNewValue: appSettings.musicSensitivity = newValue
+                    value: appSettings.musicSensitivity
+                }
+                CheckableSlider{
                     name: qsTr("Bloom")
                     onNewValue: appSettings.bloom = newValue
                     value: appSettings.bloom
