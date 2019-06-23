@@ -27,7 +27,7 @@ QtObject {
     property bool initialized: false
 
     function getDatabase() {
-         return LocalStorage.openDatabaseSync("coolretroterm" + dbMajorVersion, dbMinorVersion, "StorageDatabase", 100000);
+         return LocalStorage.openDatabaseSync("crtlivecoding" + dbMajorVersion, dbMinorVersion, "StorageDatabase", 100000);
     }
 
     function initialize() {
