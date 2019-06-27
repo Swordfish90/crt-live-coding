@@ -17,7 +17,7 @@ Window{
         spacing: 15
         Text {
             Layout.alignment: Qt.AlignHCenter
-            text: "cool-retro-term"
+            text: "crt-live-coding"
             font {bold: true; pointSize: 18}
         }
         Loader{
@@ -80,7 +80,7 @@ Window{
                 text: appSettings.version + "\n" +
                       qsTr("Author: ") + "Filippo Scognamiglio\n" +
                       qsTr("Email: ")  + "flscogna@gmail.com\n" +
-                      qsTr("Source: ") + "https://github.com/Swordfish90/cool-retro-term\n"
+                      qsTr("Source: ") + "https://github.com/Swordfish90/crt-live-coding\n"
             }
         }
     }
@@ -90,9 +90,9 @@ Window{
             anchors.fill: parent
             readOnly: true
             text: "Copyright (c) 2013 Filippo Scognamiglio <flscogna@gmail.com>\n\n" +
-                  "https://github.com/Swordfish90/cool-retro-term\n\n" +
+                  "https://github.com/Swordfish90/crt-live-coding\n\n" +
 
-                  "cool-retro-term is free software: you can redistribute it and/or modify " +
+                  "crt-live-coding is free software: you can redistribute it and/or modify " +
                   "it under the terms of the GNU General Public License as published by " +
                   "the Free Software Foundation, either version 3 of the License, or " +
                   "(at your option) any later version.\n\n" +

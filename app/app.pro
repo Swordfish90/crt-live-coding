@@ -1,5 +1,5 @@
 QT += qml quick widgets sql
-TARGET = cool-retro-term 
+TARGET = crt-live-coding
 CONFIG += c++11
 
 include(QOSC/QOSC.pri)

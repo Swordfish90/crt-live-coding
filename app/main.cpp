@@ -66,21 +66,21 @@ int main(int argc, char *argv[])
         // BUG: This usage help text goes to stderr, should go to stdout.
         // BUG: First line of output is surrounded by double quotes.
         qDebug() << "Usage: " + args.at(0) + " [--default-settings] [--workdir <dir>] [--program <prog>] [-p|--profile <prof>] [--fullscreen] [-h|--help]";
-        qDebug() << "  --default-settings  Run cool-retro-term with the default settings";
+        qDebug() << "  --default-settings  Run crt-live-coding with the default settings";
         qDebug() << "  --workdir <dir>     Change working directory to 'dir'";
         qDebug() << "  -e <cmd>            Command to execute. This option will catch all following arguments, so use it as the last option.";
         qDebug() << "  -T <title>          Set window title to 'title'.";
-        qDebug() << "  --fullscreen        Run cool-retro-term in fullscreen.";
-        qDebug() << "  -p|--profile <prof> Run cool-retro-term with the given profile.";
+        qDebug() << "  --fullscreen        Run crt-live-coding in fullscreen.";
+        qDebug() << "  -p|--profile <prof> Run crt-live-coding with the given profile.";
         qDebug() << "  -h|--help           Print this help.";
         qDebug() << "  --verbose           Print additional information such as profiles and settings.";
         return 0;
     }
 
-    QString appVersion("1.1.1");
+    QString appVersion("0.0.1-alpha");
 
     if (args.contains("-v") || args.contains("--version")) {
-        qDebug() << ("cool-retro-term " + appVersion).toStdString().c_str();
+        qDebug() << ("crt-live-coding " + appVersion).toStdString().c_str();
 	return 0;
     }
 
