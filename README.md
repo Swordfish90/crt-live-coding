@@ -4,14 +4,16 @@
 
 ## Description
 
-This project it's an attempt to a nice looking music live coding environment based on a cool-retro-term fork.
-It currently makes use of FoxDot, supercollider and vim, but any cli with a supercollider backend is theoretically supported.
+This project is an attempt to a nice looking music live coding environment based on a cool-retro-term fork.
+It currently makes use of FoxDot, supercollider and vim, but any cli application with a supercollider backend is theoretically supported.
 
 Beware, you are dealing with a *very early* release so don't expect a plug and play experience!
     
 ## Build instructions (Linux)
 
-Make sure FoxDot and supercollider (with sc3 plugins) are property installed.
+Make sure FoxDot and supercollider (with sc3 plugins) are property installed: https://github.com/Qirky/FoxDot.
+
+Install qt5 and the related dependencies: https://github.com/Swordfish90/cool-retro-term.
 
 ```bash
 # Get it from GitHub
@@ -37,7 +39,7 @@ sclang sc-foxdot-visual.scd & python3 foxdot-server.py
 # Press enter (in normal mode) to play that line of foxdot code!
 ```
 
-## How does it work
+## How does it work?
 
 There are a few pieces here working together.
 
